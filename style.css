@@ -1,0 +1,350 @@
+/* CSS العام */
+* {
+  margin: 0; /* إزالة الهوامش الافتراضية */
+  padding: 0; /* إزالة الحشو الافتراضي */
+  box-sizing: border-box; /* تضمين الحشو والحدود في العرض والارتفاع */
+  font-family: "Cairo", sans-serif; /* استخدام خط Cairo */
+}
+body {
+  background-color: #f5f5f5; /* لون خلفية الصفحة */
+  color: #c6a374; /* لون النص الأساسي */
+  direction: rtl; /* اتجاه النص من اليمين لليسار */
+  overflow-x: hidden; /* إخفاء التمرير الأفقي */
+  transition: background 0.3s, color 0.3s; /* تأثيرات الانتقال لتغيير الثيم */
+}
+
+/* الوضع الليلي */
+.dark-mode {
+  background-color: #1a1a1a; /* لون خلفية الصفحة في الوضع الليلي */
+  color: #ffffff; /* لون النص في الوضع الليلي */
+}
+.dark-mode .navbar {
+  background-color: rgba(0, 0, 0, 0.9); /* لون خلفية الشريط العلوي في الوضع الليلي */
+  color: #ffffff; /* لون النص في الشريط العلوي في الوضع الليلي */
+}
+
+
+.dark-mode .dropdown-content a:hover {
+  background-color: #000000; /* لون الخلفية عند التحويم في القائمة المنسدلة في الوضع الليلي */
+  color: #ffffff; /* لون النص عند التحويم في القائمة المنسدلة في الوضع الليلي */
+}
+.dark-mode .contact-section h1,
+.dark-mode .contact-form h2,
+.dark-mode .contact-info h2,
+.dark-mode .contact-info p,
+.dark-mode .contact-form input,
+.dark-mode .contact-form textarea,
+.dark-mode .contact-form button {
+  color: #ffffff; /* لون النص في الوضع الليلي */
+}
+.dark-mode .contact-form input,
+.dark-mode .contact-form textarea {
+  background-color: #333333; /* لون خلفية حقول الإدخال في الوضع الليلي */
+  border-color: #ffffff; /* لون حدود حقول الإدخال في الوضع الليلي */
+}
+.dark-mode .contact-form button {
+  background-color: #ffffff; /* لون خلفية الزر في الوضع الليلي */
+  color: #1a1a1a; /* لون النص في الزر في الوضع الليلي */
+}
+.dark-mode .contact-form button:hover {
+  background-color: #e0e0e0; /* لون خلفية الزر عند التحويم في الوضع الليلي */
+  color: #1a1a1a; /* لون النص في الزر عند التحويم في الوضع الليلي */
+}
+
+/* الشريط العلوي */
+.navbar {
+  display: flex; /* استخدام Flexbox */
+  justify-content: space-between; /* توزيع العناصر بين جانبي الشريط */
+  align-items: center; /* توسيط العناصر عموديًا */
+  padding: 15px 40px; /* تباعد داخلي */
+  background-color: rgba(52, 52, 52, 0.9); /* لون خلفية الشريط العلوي */
+  position: fixed; /* تثبيت الشريط في الأعلى */
+  width: 100%; /* عرض كامل */
+  top: 0; /* محاذاة من الأعلى */
+  z-index: 1000; /* تحديد مستوى الترتيب */
+}
+.logo img {
+  height: 70px; /* ارتفاع الشعار */
+  width: auto; /* عرض تلقائي */
+}
+.nav-links {
+  list-style: none; /* إزالة النقاط من القائمة */
+  display: flex; /* عرض العناصر في سطر واحد */
+  gap: 20px; /* تباعد بين العناصر */
+}
+.nav-links li a {
+  color: #c6a374; /* لون النص */
+  text-decoration: none; /* إزالة التسطير */
+  font-size: 19px; /* حجم الخط */
+  transition: color 0.3s ease; /* تأثير تغيير اللون عند التحويم */
+}
+.nav-links li a:hover {
+  color: #b08c5e; /* لون النص عند التحويم */
+}
+.dropdown {
+  position: relative; /* تحديد الوضع النسبي */
+  display: inline-block; /* عرض العنصر ككتلة داخلية */
+}
+.dropdown-btn {
+  background: none; /* إزالة الخلفية */
+  border: none; /* إزالة الحدود */
+  cursor: pointer; /* تغيير شكل المؤشر إلى يد */
+  font-size: 24px; /* حجم الخط */
+  color: #c6a374; /* لون النص */
+}
+.dropdown-content {
+  display: none; /* إخفاء المحتوى بشكل افتراضي */
+  position: absolute; /* تحديد الوضع المطلق */
+  right: 0; /* محاذاة إلى اليمين */
+  background-color: rgba(255, 255, 255, 0.95); /* لون خلفية القائمة المنسدلة */
+  min-width: 180px; /* الحد الأدنى للعرض */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* إضافة ظل */
+  z-index: 1; /* تحديد مستوى الترتيب */
+  border-radius: 8px; /* زوايا مدورة */
+  overflow: hidden; /* إخفاء المحتوى الزائد */
+}
+.dropdown-content a {
+  color: black; /* لون النص */
+  padding: 12px 15px; /* تباعد داخلي */
+  display: block; /* عرض العنصر ككتلة */
+  text-decoration: none; /* إزالة التسطير */
+  font-size: 16px; /* حجم الخط */
+  transition: background 0.3s ease; /* تأثير تغيير الخلفية عند التحويم */
+}
+.dropdown-content a:hover {
+  background-color: #c6a374; /* لون الخلفية عند التحويم */
+  color: white; /* لون النص عند التحويم */
+}
+.dropdown:hover .dropdown-content {
+  display: block; /* عرض المحتوى عند التحويم */
+}
+.theme-toggle {
+  background: none; /* إزالة الخلفية */
+  border: none; /* إزالة الحدود */
+  color: #c6a374; /* لون النص */
+  font-size: 18px; /* حجم الخط */
+  cursor: pointer; /* تغيير شكل المؤشر إلى يد */
+  margin-right: 20px; /* تباعد من اليمين */
+}
+.hamburger {
+  display: none; /* إخفاء الزر بشكل افتراضي */
+  flex-direction: column; /* ترتيب العناصر عموديًا */
+  cursor: pointer; /* تغيير شكل المؤشر إلى يد */
+  margin-right: 20px; /* تباعد من اليمين */
+}
+.hamburger div {
+  width: 25px; /* عرض الخط */
+  height: 3px; /* ارتفاع الخط */
+  background-color: #c6a374; /* لون الخط */
+  margin: 4px 0; /* تباعد بين الخطوط */
+  transition: 0.4s; /* تأثير الانتقال */
+}
+.hamburger.open div:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px); /* تدوير الخط الأول */
+}
+.hamburger.open div:nth-child(2) {
+  opacity: 0; /* إخفاء الخط الثاني */
+}
+.hamburger.open div:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px); /* تدوير الخط الثالث */
+}
+@media (max-width: 768px) {
+  .nav-links {
+    display: flex; /* استخدام Flexbox */
+    flex-direction: column; /* تغيير اتجاه العناصر إلى عمودي */
+    width: 250px; /* عرض القائمة */
+    background-color: rgba(52, 52, 52, 0.9); /* لون خلفية القائمة */
+    position: fixed; /* تثبيت القائمة */
+    top: 0; /* محاذاة من الأعلى */
+    right: -250px; /* إخفاء القائمة */
+    height: 100%; /* ارتفاع كامل */
+    padding: 20px; /* تباعد داخلي */
+    transition: right 0.3s ease; /* تأثير الانتقال */
+  }
+  .nav-links.active {
+    right: 0; /* إظهار القائمة */
+  }
+  .nav-links li {
+    text-align: center; /* توسيط النص */
+    padding: 10px 0; /* تباعد داخلي */
+  }
+  .hamburger {
+    display: flex; /* عرض زر القائمة المنسدلة */
+  }
+}
+
+/* تنسيق قسم الاتصال */
+.contact-section {
+  padding: 100px 20px; /* تباعد داخلي */
+  text-align: center; /* توسيط النص */
+}
+.contact-section h1 {
+  font-size: 48px; /* حجم الخط */
+  color: #c6a374; /* لون النص */
+  margin-bottom: 20px; /* تباعد من الأسفل */
+}
+.contact-container {
+  display: flex; /* استخدام Flexbox */
+  justify-content: space-around; /* توزيع العناصر بالتساوي */
+  flex-wrap: wrap; /* السماح بلف العناصر */
+  gap: 30px; /* تباعد بين العناصر */
+  max-width: 1200px; /* أقصى عرض */
+  margin: 0 auto; /* توسيط الحاوية */
+}
+.contact-form,
+.contact-info {
+  flex: 1; /* توسيع العنصر لملء المساحة المتاحة */
+  min-width: 300px; /* الحد الأدنى للعرض */
+  background-color: #c0e4bf84; /* لون الخلفية */
+  padding: 30px; /* تباعد داخلي */
+  border-radius: 15px; /* زوايا مدورة */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* إضافة ظل */
+}
+.contact-form h2,
+.contact-info h2 {
+  font-size: 28px; /* حجم الخط */
+  color: #c6a374; /* لون النص */
+  margin-bottom: 20px; /* تباعد من الأسفل */
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%; /* عرض كامل */
+  padding: 15px; /* تباعد داخلي */
+  margin-bottom: 20px; /* تباعد من الأسفل */
+  border: 1px solid #c6a374; /* لون الحدود */
+  border-radius: 10px; /* زوايا مدورة */
+  background-color: #a0c59ec9; /* لون الخلفية */
+  color: #ffffff; /* لون النص */
+  font-size: 16px; /* حجم الخط */
+  transition: border-color 0.3s ease; /* تأثير تغيير لون الحدود */
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #b08c5e; /* لون الحدود عند التركيز */
+  outline: none; /* إزالة الحدود الخارجية */
+}
+.contact-form textarea {
+  resize: vertical; /* السماح بتغيير الارتفاع */
+  height: 150px; /* ارتفاع ثابت */
+}
+.contact-form button {
+  background-color: #c6a374; /* لون الخلفية */
+  color: #ffffff; /* لون النص */
+  padding: 15px 30px; /* تباعد داخلي */
+  border: none; /* إزالة الحدود */
+  border-radius: 10px; /* زوايا مدورة */
+  font-size: 18px; /* حجم الخط */
+  cursor: pointer; /* تغيير شكل المؤشر إلى يد */
+  transition: background 0.3s ease, transform 0.3s ease; /* تأثيرات الانتقال */
+}
+.contact-form button:hover {
+  background-color: #b08c5e; /* لون الخلفية عند التحويم */
+  transform: scale(1.05); /* تكبير الزر */
+}
+.contact-info p {
+  font-size: 18px; /* حجم الخط */
+  color: #c6a374; /* لون النص */
+  margin-bottom: 15px; /* تباعد من الأسفل */
+}
+.contact-info i {
+  color: #c6a374; /* لون الأيقونة */
+  margin-left: 10px; /* تباعد من اليسار */
+}
+
+/* تنسيق أيقونات وسائل التواصل الاجتماعي */
+.social-icons {
+  display: flex; /* استخدام Flexbox */
+  justify-content: center; /* توسيط العناصر */
+  gap: 20px; /* تباعد بين العناصر */
+  margin-top: 20px; /* تباعد من الأعلى */
+}
+.social-icons a {
+  color: #c6a374; /* لون النص */
+  font-size: 24px; /* حجم الخط */
+  transition: color 0.3s ease; /* تأثير تغيير اللون عند التحويم */
+}
+.social-icons a:hover {
+  color: #b08c5e; /* لون النص عند التحويم */
+}
+
+/* تنسيق خريطة جوجل */
+.map-container {
+  margin-top: 50px; /* تباعد من الأعلى */
+  width: 100%; /* عرض كامل */
+  height: 400px; /* ارتفاع ثابت */
+  border-radius: 15px; /* زوايا مدورة */
+  overflow: hidden; /* إخفاء المحتوى الزائد */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* إضافة ظل */
+}
+.map-container iframe {
+  width: 100%; /* عرض كامل */
+  height: 100%; /* ارتفاع كامل */
+  border: none; /* إزالة الحدود */
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* تغيير اتجاه العناصر إلى عمودي */
+    align-items: flex-start; /* محاذاة العناصر إلى اليسار */
+    padding: 30px; /* تباعد داخلي */
+  }
+  .logo img {
+    position: absolute; /* تحديد الوضع المطلق */
+    left: 20px; /* محاذاة من اليسار */
+    top: 10px; /* محاذاة من الأعلى */
+  }
+  .nav-links {
+    display: flex; /* استخدام Flexbox */
+    flex-direction: column; /* تغيير اتجاه العناصر إلى عمودي */
+    width: 250px; /* عرض القائمة */
+    background-color: rgba(52, 52, 52, 0.9); /* لون خلفية القائمة */
+    position: fixed; /* تثبيت القائمة */
+    top: 0; /* محاذاة من الأعلى */
+    right: -250px; /* إخفاء القائمة */
+    height: 100%; /* ارتفاع كامل */
+    padding: 20px; /* تباعد داخلي */
+    gap: 10px; /* تباعد بين العناصر */
+    z-index: 999; /* تحديد مستوى الترتيب */
+    transition: right 0.3s ease; /* تأثير الانتقال */
+  }
+  .nav-links.active {
+    right: 0; /* إظهار القائمة */
+  }
+  .nav-links li {
+    text-align: center; /* توسيط النص */
+    padding: 10px 0; /* تباعد داخلي */
+  }
+  .nav-links li a {
+    font-size: 16px; /* حجم الخط */
+  }
+  .hamburger {
+    display: flex; /* عرض زر القائمة المنسدلة */
+    flex-direction: column; /* ترتيب العناصر عموديًا */
+    cursor: pointer; /* تغيير شكل المؤشر إلى يد */
+  }
+  .hamburger div {
+    width: 25px; /* عرض الخط */
+    height: 3px; /* ارتفاع الخط */
+    background-color: #c6a374; /* لون الخط */
+    margin: 4px 0; /* تباعد بين الخطوط */
+    transition: 0.4s; /* تأثير الانتقال */
+    z-index: 1000; /* تحديد مستوى الترتيب */
+  }
+  .hamburger.open div:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 10px); /* تدوير الخط الأول */
+  }
+  .hamburger.open div:nth-child(2) {
+    opacity: 0; /* إخفاء الخط الثاني */
+  }
+  .hamburger.open div:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -11px); /* تدوير الخط الثالث */
+  }
+  .theme-toggle {
+    margin-right: 0; /* إزالة التباعد من اليمين */
+    margin-top: 10px; /* تباعد من الأعلى */
+    position: absolute; /* تحديد الوضع المطلق */
+    right: 100px; /* محاذاة من اليمين */
+    top: 20px; /* محاذاة من الأعلى */
+    font-size: 20px; /* حجم الخط */
+  }
+}

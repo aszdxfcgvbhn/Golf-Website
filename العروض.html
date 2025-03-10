@@ -1,0 +1,514 @@
+<!DOCTYPE html> <!-- تعريف نوع المستند كـ HTML5 -->
+<html lang="ar"> <!-- بداية مستند HTML مع تحديد اللغة العربية -->
+  <head> <!-- بداية قسم الرأس الذي يحتوي على معلومات تعريفية -->
+    <meta charset="UTF-8" /> <!-- تعريف ترميز الصفحة كـ UTF-8 لدعم اللغة العربية -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- إعداد viewport لجعل الصفحة متجاوبة مع الأجهزة المختلفة -->
+    <title>هول أن ون | عالم الجولف الفاخر</title> <!-- عنوان الصفحة -->
+    
+    <!-- استيراد خط Cairo من Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    
+    <!-- استيراد مكتبة GSAP للرسوم المتحركة -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> <!-- مكتبة GSAP الأساسية -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script> <!-- إضافة ScrollTrigger للتحكم بالرسوم المتحركة عند التمرير -->
+    
+    <!-- استيراد مكتبة jQuery لتسهيل التعامل مع DOM -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- مكتبة jQuery -->
+    
+    <style>
+      /* CSS الخاص بالصفحة */
+      /* CSS العام */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Cairo", sans-serif;
+      }
+
+      body {
+        background-color: #f7fff784; /* لون الخلفية في الوضع النهاري */
+        color: white; /* لون النص الأساسي */
+        direction: rtl; /* اتجاه النص من اليمين لليسار */
+        overflow-x: hidden; /* إخفاء التمرير الأفقي */
+        transition: background 0.3s, color 0.3s; /* تأثيرات الانتقال لتغيير الثيم */
+      }
+
+      /* الوضع الليلي */
+      .dark-mode {
+        background-color: #000; /* خلفية سوداء */
+        color: #ffffff;
+      }
+
+      .dark-mode .navbar {
+        background-color: rgba(0, 0, 0, 0.9);
+        color: #ffffff;
+      }
+
+      .dark-mode .dropdown-content {
+        background-color: rgba(0, 0, 0, 0.95);
+        color: #ffffff;
+      }
+
+      .dark-mode .dropdown-content a {
+        color: #ffffff;
+      }
+
+      .dark-mode .dropdown-content a:hover {
+        background-color: #333;
+        color: #ffffff;
+      }
+
+      .dark-mode .offer-container {
+        background-color: #333; /* لون الخلفية في الوضع الليلي */
+        color: #ffffff; /* لون النص في الوضع الليلي */
+      }
+
+      /* الأحداث */
+      .events {
+        text-align: center;
+        padding: 80px 20px;
+        background-color: #c0e4bf84; /* اللون في الوضع النهاري */
+      }
+
+      .dark-mode .events {
+        background-color: #c0e4bf84; /* اللون في الوضع الليلي */
+      }
+
+      .events h2 {
+        color: #c6a374;
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+
+      .event {
+        background-color: #a0c59ec9; /* اللون في الوضع النهاري */
+        border-radius: 15px;
+        padding: 20px;
+        margin: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .dark-mode .event {
+        background-color: #c0e4bf84; /* اللون في الوضع الليلي */
+      }
+
+      .event h3 {
+        color: #c6a374;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .event p {
+        font-size: 18px;
+        color: #333;
+      }
+
+      .dark-mode .event p {
+        color: #ffffff;
+      }
+
+      .dark-mode .faq {
+        background-color: #c0e4bf84; /* اللون في الوضع الليلي */
+      }
+
+      .faq-container {
+        max-width: 700px;
+        margin: auto;
+        background-color: #a0c59ec9; /* اللون في الوضع النهاري */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .dark-mode .faq-container {
+        background-color: #c0e4bf84; /* اللون في الوضع الليلي */
+      }
+
+      .faq h2 {
+        color: #c6a374;
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+
+      .faq-item {
+        border-bottom: 1px solid #ddd;
+        padding: 15px 0;
+        transition: background 0.3s;
+      }
+
+      .faq-item:hover {
+        background: #c0e4bf84;
+      }
+
+      .faq-question {
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #c6a374;
+        transition: color 0.3s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .faq-answer a:hover {
+        text-decoration: underline;
+      }
+
+      .arrow {
+        transition: transform 0.3s;
+      }
+
+      .faq-item.open .arrow {
+        transform: rotate(180deg);
+      }
+
+      /* الحزم المخصصة */
+      .packages {
+        text-align: center;
+        padding: 120px 20px 80px; /* إضافة فراغ أعلى */
+        background-color: #c6f1c3c9; /* اللون في الوضع النهاري */
+      }
+
+      .dark-mode .packages {
+        background-color: #00000084; /* اللون في الوضع الليلي */
+      }
+
+      .packages h2 {
+        color: #c6a374;
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+
+      .package-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .package {
+        background-color: hwb(120 94% 2% / 0.518); /* اللون في الوضع النهاري */
+        border-radius: 15px;
+        padding: 20px;
+        width: 300px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .dark-mode .package {
+        background-color: #333; /* لون الخلفية في الوضع الليلي */
+      }
+
+      .package:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .package h3 {
+        color: #c6a374;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .package p {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .dark-mode .package p {
+        color: #ffffff;
+      }
+
+      .package p a {
+        color: rgb(123, 200, 255); /* تغيير لون الروابط داخل الصناديق إلى الأزرق */
+        text-decoration: none;
+      }
+
+      .package p a:hover {
+        text-decoration: underline;
+      }
+
+      .package button {
+        background-color: #c6a374;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+
+      .package button:hover {
+        background-color: #b08c5e;
+        transform: scale(1.1);
+      }
+
+      /* الشريط العلوي */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 40px;
+        background-color: rgba(63, 63, 63, 0.9); /* لون خلفية الشريط السكني المناسب */
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .logo img {
+        height: 70px;
+        width: auto;
+      }
+
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+      }
+
+      .nav-links li a {
+        color: #c6a374;
+        text-decoration: none;
+        font-size: 19px;
+        transition: color 0.3s ease;
+      }
+      
+
+      .nav-links li a:hover {
+        color: #b08c5e;
+      }
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 24px;
+        color: #c6a374;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: rgba(255, 255, 255, 0.95);
+        min-width: 180px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+        z-index: 1;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .dropdown-content a {
+        color: black;
+        padding: 12px 15px;
+        display: block;
+        text-decoration: none;
+        font-size: 16px;
+        transition: background 0.3s ease;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #c6a374;
+        color: white;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        color: #c6a374;
+        font-size: 18px;
+        cursor: pointer;
+        margin-right: 20px;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        margin-right: 20px;
+      }
+      .hamburger div {
+        width: 25px;
+        height: 3px;
+        background-color: #c6a374;
+        margin: 4px 0;
+        transition: 0.4s;
+      }
+      .hamburger.open div:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+      }
+      .hamburger.open div:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.open div:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+      }
+      @media (max-width: 768px) {
+        .navbar {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 30px;
+        }
+        .logo img {
+          position: absolute;
+          left: 20px;
+          top: 10px;
+        }
+        .nav-links {
+          display: flex;
+          flex-direction: column;
+          width: 250px;
+          background-color: rgba(52, 52, 52, 0.9);
+          position: fixed;
+          top: 0;
+          right: -250px;
+          height: 100%;
+          padding: 20px;
+          gap: 10px;
+          z-index: 999;
+          transition: right 0.3s ease;
+        }
+        .nav-links.active {
+          right: 0;
+        }
+        .nav-links li {
+          text-align: center;
+          padding: 10px 0;
+        }
+        .nav-links li a {
+          font-size: 16px;
+        }
+
+        .hamburger {
+          display: flex;
+          flex-direction: column;
+          cursor: pointer;
+        }
+
+        .hamburger div {
+          width: 25px;
+          height: 3px;
+          background-color: #c6a374;
+          margin: 4px 0;
+          transition: 0.4s;
+          z-index: 1000;
+        }
+
+        .hamburger.open div:nth-child(1) {
+          transform: rotate(-45deg) translate(-5px, 10px);
+        }
+        .hamburger.open div:nth-child(2) {
+          opacity: 0;
+        }
+        .hamburger.open div:nth-child(3) {
+          transform: rotate(45deg) translate(-5px, -11px);
+        }
+
+        .theme-toggle {
+          margin-right: 0;
+          margin-top: 10px;
+          position: absolute;
+          right: 100px;
+          top: 20px;
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head> <!-- نهاية قسم الرأس -->
+  <body> <!-- بداية قسم الجسم الذي يحتوي على محتوى الصفحة -->
+    <!-- شريط التنقل العلوي -->
+    <header class="navbar"> <!-- بداية شريط التنقل -->
+      <!-- شعار الموقع -->
+      <div class="logo"> <!-- قسم الشعار -->
+        <img src="لوجو.png" alt="شعار الموقع" /> <!-- صورة الشعار -->
+      </div> <!-- نهاية قسم الشعار -->
+      
+      <!-- قائمة التنقل -->
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">الصفحة الرئيسية</a></li>
+          <li><a href="أدوات الجولف.html">الأدوات</a></li>
+          <li><a href="العروض.html">العروض</a></li>
+          <li><a href="المرافق.html">المرافق</a></li>
+          <li><a href="ساحات الجولف.html">ساحات الجولف</a></li>
+          <li><a href="المدربين.html">المدربين</a></li>
+          <li><a href="سي فيو.html">سي فيو</a></li>
+          <li><a href="التواصل.html">التواصل</a></li>
+        </ul>
+      </nav> <!-- نهاية قسم القائمة -->
+      
+      <!-- زر القائمة المنسدلة للأجهزة الصغيرة -->
+      <div class="hamburger" onclick="toggleMenu()"> <!-- زر القائمة المنسدلة -->
+        <div></div> <!-- خط من القائمة -->
+        <div></div> <!-- خط من القائمة -->
+        <div></div> <!-- خط من القائمة -->
+      </div> <!-- نهاية زر القائمة المنسدلة -->
+      
+      <!-- زر تبديل الوضع الليلي -->
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button> <!-- زر تبديل الوضع الليلي -->
+    </header> <!-- نهاية شريط التنقل -->
+
+    <!-- قسم الحزم المخصصة -->
+    <section class="packages"> <!-- بداية قسم الحزم المخصصة -->
+      <h2>الحزم المخصصة</h2> <!-- عنوان القسم -->
+      <div class="package-container"> <!-- حاوية لعناصر الحزم -->
+        <!-- حزمة خمس جولات -->
+        <div class="package"> <!-- بداية حزمة -->
+          <h3>خمس جولات</h3> <!-- عنوان الحزمة -->
+          <p>🔹 خمس جولات - 18 حفرة للجولف</p> <!-- تفاصيل الحزمة -->
+          <p>🔹 إقامة فاخرة لمدة ٥ ليالٍ</p> <!-- تفاصيل الحزمة -->
+          <p>
+            🔹 جولة مجانية في ملعب "سي فيو" <a href="سي فيو.html">سي فيو</a>
+          </p> <!-- تفاصيل الحزمة مع رابط -->
+          <p>🔹 جلسة تدريب رقمية مجانية</p> <!-- تفاصيل الحزمة -->
+          <p class="price">السعر: ٢٠٠٠$</p> <!-- سعر الحزمة -->
+          <button onclick="location.href='التواصل.html'">احجز الآن</button> <!-- زر الحجز -->
+        </div> <!-- نهاية حزمة -->
+        
+        <!-- حزمة الجولة الثلاثية -->
+        <div class="package"> <!-- بداية حزمة -->
+          <h3>الجولة الثلاثية</h3> <!-- عنوان الحزمة -->
+          <p>🔹 إقامة فندقية لشخصين مع الإفطار</p> <!-- تفاصيل الحزمة -->
+          <p>🔹 ثلاث جولات - ١٨ حفرة</p> <!-- تفاصيل الحزمة -->
+          <p>
+            🔹 خصم 20% لمتجر المحترفين
+            <a href="أدوات الجولف.html">أدوات الجولف</a>
+          </p> <!-- تفاصيل الحزمة مع رابط -->
+          <p>🔹 تأجير مجاني للعربات</p> <!-- تفاصيل الحزمة -->
+          <p class="price">السعر: ٣٥٠٠$</p> <!-- سعر الحزمة -->
+          <button onclick="location.href='التواصل.html'">احجز الآن</button> <!-- زر الحجز -->
+        </div> <!-- نهاية حزمة -->
+        
+        <!-- حزمة استراحة استجمام -->
+        <div class="package"> <!-- بداية حزمة -->
+          <h3>استراحة استجمام</h3> <!-- عنوان الحزمة -->
+          <p>🔹 إقامة لمدة ليلة واحدة مع إفطار فاخر</p> <!-- تفاصيل الحزمة -->
+          <p>🔹 إمكانية الوصول للملاعب الخاصة</p> <!-- تفاصيل الحزمة -->
+          <p>🔹 تناول العشاء بأي مطعم المنتجع</p> <!-- تفاصيل الحزمة -->
+          <p>🔹 تأجير نادي مجاني</p> <!-- تفاصيل الحزمة -->
+          <p class="price">السعر: ٥٠٠٠$</p> <!-- سعر الحزمة -->
+          <button onclick="location.href='التواصل.html'">احجز الآن</button> <!-- زر الحجز -->
+        </div> <!-- نهاية حزمة -->
+      </div> <!-- نهاية حاوية الحزم -->
+    </section> <!-- نهاية قسم الحزم المخصصة -->
+
+    <!-- ربط ملف JavaScript الخارجي -->
+    <script src="script.js"></script> <!-- ملف JavaScript الخارجي -->
+  </body> <!-- نهاية قسم الجسم -->
+</html> <!-- نهاية مستند HTML -->
